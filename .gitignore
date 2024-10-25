@@ -1,0 +1,9 @@
+# ignore Text editor/IDE files
+*.vs
+*.sln
+*.vscode
+*.vcxproj
+Vole Machine/
+*.filters
+*.user
+x64/
