@@ -2,6 +2,7 @@
 #include "Set_Instruction.h"
 #include "Registers.h"
 #include "Memory.h"
+#include "ALU.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,5 +13,8 @@ using namespace std;
 int main(void){
     Program P;
     P.modify();
-    // P.print();
+    P.print();
+    
+
+
 }
