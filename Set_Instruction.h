@@ -6,6 +6,7 @@
 #include "Memory.h"
 #include "Registers.h"
 #include "ALU.h"
+#include <bitset>
 class Set_Instruction :ALU{
     private:
     string Input;
@@ -15,5 +16,6 @@ class Set_Instruction :ALU{
     void Store(Registers &Regs , Memory &Mem);//3158  == M58 = R1
     void Move(Registers &Regs);//4056 == R6 = R5
     bool Jump(Registers &Regs);// B543  If(R5 == R0) jump to M43
+    void twosCompAdd(Registers &R);
 };
 #endif

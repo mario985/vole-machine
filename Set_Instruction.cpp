@@ -24,6 +24,9 @@ void Set_Instruction::ChooseMethod(const string& input, Registers& Reg, Memory& 
         ptr = &Mem.Mem_Slots[HexToDec(Input.substr(2, 2))];
         return;
     }
+    else if (opCode == '5') {
+        twosCompAdd(Reg);
+    }
     ptr++;  // Increment pointer after each operation
 }
 void Set_Instruction::Load(Registers& Regs, Memory& Mem) {
@@ -54,4 +57,20 @@ void Set_Instruction::Move(Registers& Regs) {
 bool Set_Instruction::Jump(Registers& Regs) {
     int regIdx = HexToDec(Input.substr(1, 1));
     return Regs.GetValues(regIdx) == Regs.GetValues(0);
+}
+void Set_Instruction::twosCompAdd(Registers &R) {
+
+    int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
+    int regIdxS = HexToDec(Input.substr(2, 1)); // index of reg1 to add
+    int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
+    string value1 = "0x";
+    string value2 = "0x";
+    value1 += R.GetValues(regIdxS); // Hexa form of the value in the register
+    value2 += R.GetValues(regIdxT);
+    int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
+    int num2 = stoi(value2, nullptr, 16) - 256;
+    int res = num1 + num2;
+    string result = DecToHex(to_string(res));
+    result = result.substr(6,2);
+    R.SetValues(result, regIdxR);
 }
