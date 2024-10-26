@@ -15,13 +15,11 @@ using namespace std;
 Program::Program() {
     int count = 0;
     string input;
-    while(true){
-    cin>>input;
-    Mem.Set_Value(input.substr(0,2), count++);
-    Mem.Set_Value(input.substr(2,4), count++);
-    if(input=="C000"){
-        break;
-    }
+    while (true) {
+        cin >> input;
+        Mem.Set_Value(input.substr(0, 2), count++);
+        Mem.Set_Value(input.substr(2, 2), count++);
+        if (input == "C000") break;
     }
     ptr = &slot[0];
 }
@@ -36,22 +34,18 @@ void Program::modify() {
 
         if (Is_Valid(input)) {
             Inst.ChooseMethod(input, Reg, Mem, ptr);
-        } else {
+        }
+        else {
             ptr++;
         }
     }
 }
-void Program::print(){
-    for(int i=0;i<17;i++){
-        cout<<"REgIndex["<<i+1<<"]: "<<Reg.GetValues(i)<<endl;
 
 void Program::print() {
     for (int i = 0; i < 16; i++) {
         cout << "RegIndex[" << DecToHex(to_string(i)) << "]: " << Reg.GetValues(i) << endl;
     }
-    cout<<"=============="<<endl;
-    for(int i=0;i<256;i++){
-        cout<<"MemSlot["<<i+1<<"]: "<<Mem.Get_Value(i)<<endl;
+    cout << "==============" << endl;
 
     for (int i = 0; i < 256; i++) {
         cout << "MemSlot[" << DecToHex(to_string(i)) << "]: " << Mem.Get_Value(i) << endl;
