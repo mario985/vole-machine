@@ -25,7 +25,7 @@ void Set_Instruction::ChooseMethod(string input , Registers &Reg , Memory &Mem ,
         // }
     }
 }
-void Set_Instruction::Load(Registers &Regs , Memory &Mem){//1058 == R0 =M58    2058 == R0 = 58
+void Set_Instruction::Load(Registers &Regs , Memory &Mem){ 
     string RegNumber,MemNumber,Operation;
     Operation = Input[0],RegNumber+=Input[1],MemNumber+=Input[2],MemNumber+=Input[3];
    if(Operation=="1"){

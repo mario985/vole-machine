@@ -15,14 +15,14 @@ Program::Program(){
     int count=0;
     string input;
     while(true){
-    cin>>input;
-    Mem.Set_Value(input.substr(0,2), count++);
-    Mem.Set_Value(input.substr(2,4), count++);
-    if(input=="C000"){
-        break;
-    }
-    }
-    ptr = &slot[0];
+        cin >> input;
+        Mem.Set_Value(input.substr(0,2), count++);
+        Mem.Set_Value(input.substr(2,4), count++);
+        if(input=="C000"){
+            break;
+        }
+        }
+        ptr = &slot[0];
 }
 void Program::modify(){
    while(true)
@@ -42,12 +42,12 @@ void Program::modify(){
 }
 void Program::print(){
     for(int i=0;i<17;i++){
-        cout<<"REgIndex["<<i+1<<"]: "<<Reg.GetValues(i)<<endl;
+        cout<<"REgIndex["<<i<<"]: "<<Reg.GetValues(i)<<endl;
 
     }
     cout<<"=============="<<endl;
     for(int i=0;i<256;i++){
-        cout<<"MemSlot["<<i+1<<"]: "<<Mem.Get_Value(i)<<endl;
+        cout<<"MemSlot["<<i<<"]: "<<Mem.Get_Value(i)<<endl;
 
     }
     // cout<<endl;

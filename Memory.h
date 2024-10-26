@@ -5,8 +5,8 @@
 #include <vector>
 using namespace std;
 class Memory{
-    public:
-    // protected:
+public:
+
     vector<string>Mem_Slots;
     Memory();
     void Set_Value(string value , int bit);

@@ -12,12 +12,12 @@
 using namespace std;
 #endif
 class Program :Memory{
-    private:
+
     Registers Reg;
     Memory Mem;
     Set_Instruction Inst;
     string *ptr;
-    public:
+public:
     Program();
     void modify();
     void print();

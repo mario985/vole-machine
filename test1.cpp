@@ -12,5 +12,5 @@ using namespace std;
 int main(void){
     Program P;
     P.modify();
-    // P.print();
+    P.print();
 }
