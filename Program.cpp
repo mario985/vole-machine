@@ -2,54 +2,58 @@
 #include "Set_Instruction.h"
 #include "Registers.h"
 #include "Memory.h"
+#include "ALU.h"
 #include <iostream>
 #include <vector>
 #include <string>
-#include <bitset>
 #include <sstream>
 #include <iomanip>
 using namespace std;
-#define ll long long 
+
 #define slot Mem.Mem_Slots
-Program::Program(){
-    int count=0;
+
+Program::Program() {
+    int count = 0;
     string input;
     while(true){
-        cin >> input;
-        Mem.Set_Value(input.substr(0,2), count++);
-        Mem.Set_Value(input.substr(2,4), count++);
-        if(input=="C000"){
-            break;
-        }
-        }
-        ptr = &slot[0];
-}
-void Program::modify(){
-   while(true)
-   {
-    string input;
-    input += *ptr;
-    ptr++;
-    input+= *ptr;
-    ptr++;
+    cin>>input;
+    Mem.Set_Value(input.substr(0,2), count++);
+    Mem.Set_Value(input.substr(2,4), count++);
     if(input=="C000"){
-        return;
+        break;
     }
-    // Inst.ChooseMethod(input,Reg , Mem , ptr );
+    }
+    ptr = &slot[0];
+}
 
-   }
+void Program::modify() {
+    while (true) {
+        string input;
+        input += *ptr++;
+        input += *ptr;
 
+        if (input == "C000" || input == "0000") return;
+
+        if (Is_Valid(input)) {
+            Inst.ChooseMethod(input, Reg, Mem, ptr);
+        } else {
+            ptr++;
+        }
+    }
 }
 void Program::print(){
     for(int i=0;i<17;i++){
-        cout<<"REgIndex["<<i<<"]: "<<Reg.GetValues(i)<<endl;
+        cout<<"REgIndex["<<i+1<<"]: "<<Reg.GetValues(i)<<endl;
 
+void Program::print() {
+    for (int i = 0; i < 16; i++) {
+        cout << "RegIndex[" << DecToHex(to_string(i)) << "]: " << Reg.GetValues(i) << endl;
     }
     cout<<"=============="<<endl;
     for(int i=0;i<256;i++){
-        cout<<"MemSlot["<<i<<"]: "<<Mem.Get_Value(i)<<endl;
+        cout<<"MemSlot["<<i+1<<"]: "<<Mem.Get_Value(i)<<endl;
 
+    for (int i = 0; i < 256; i++) {
+        cout << "MemSlot[" << DecToHex(to_string(i)) << "]: " << Mem.Get_Value(i) << endl;
     }
-    // cout<<endl;
-
 }

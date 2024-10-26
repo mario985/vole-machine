@@ -8,47 +8,50 @@
 #include <sstream>
 #include <iomanip>
 using namespace std;
-// void Set_Instruction::SetInput(string input){
-//     Input=input;
-// }
-void Set_Instruction::ChooseMethod(string input , Registers &Reg , Memory &Mem , string*ptr){
+void Set_Instruction::ChooseMethod(const string& input, Registers& Reg, Memory& Mem, string*& ptr) {
     Input = input;
-    if(Input[0]=='1' || Input[0]=='2')Load(Reg,Mem);
-    else if(Input[0]=='3')Store(Reg,Mem);
-    else if(Input[0]=='4')Move(Reg);
-    else if(Input[0]=='B'){
-        // if(Jump(Reg)){
-        //     string Memloc;
-        //     Memloc[0]=Input[2],Memloc[1]=Input[3];
-        //     ptr = &Mem.Mem_Slots[stoi(Memloc)];
-        //     return;
-        // }
+    char opCode = Input[0];
+    if (opCode == '1' || opCode == '2') {
+        Load(Reg, Mem);
+    }
+    else if (opCode == '3') {
+        Store(Reg, Mem);
+    }
+    else if (opCode == '4') {
+        Move(Reg);
+    }
+    else if (opCode == 'B' && Jump(Reg)) {
+        ptr = &Mem.Mem_Slots[HexToDec(Input.substr(2, 2))];
+        return;
+    }
+    ptr++;  // Increment pointer after each operation
+}
+void Set_Instruction::Load(Registers& Regs, Memory& Mem) {
+    char operation = Input[0];
+    int regIdx = HexToDec(Input.substr(1, 1));
+    int memAddr = HexToDec(Input.substr(2, 2));
+
+    if (operation == '1') {
+        Regs.SetValues(Mem.Get_Value(memAddr), regIdx);
+    }
+    else {
+        Regs.SetValues(Input.substr(2, 2), regIdx); // Load immediate value
     }
 }
-void Set_Instruction::Load(Registers &Regs , Memory &Mem){ 
-    string RegNumber,MemNumber,Operation;
-    Operation = Input[0],RegNumber+=Input[1],MemNumber+=Input[2],MemNumber+=Input[3];
-   if(Operation=="1"){
-    Regs.SetValues(Mem.Get_Value(stoi(MemNumber)) , stoi(RegNumber));
-    return;
-   }
-   Regs.SetValues(MemNumber,stoi(RegNumber));
-}
-void Set_Instruction::Store(Registers & Regs , Memory & Mem){//3158  == M58 = R1
-    string RegNumber;
-    // RegNumber=Input[1];
-    // int MemNumber = (Input[2] - '0') * 10 + (Input[3] - '0');
-    // Regs.SetValues(Mem.Get_Value((MemNumber)) , stoi(RegNumber));
-}
-void Set_Instruction::Move(Registers &Regs){//4056 == R6 = R5
-    string Reg1,Reg2;
-    Reg1=Input[2],  Reg2 = Input[3];
-    Regs.SetValues(Regs.GetValues(stoi(Reg1)) , stoi(Reg2));
-}
-bool Set_Instruction::Jump(Registers &Regs){
-   int Reg_Index = Input[1] - '0';
-   return Regs.GetValues(Reg_Index)==Regs.GetValues(0);
+
+void Set_Instruction::Store(Registers& Regs, Memory& Mem) {
+    int regIdx = HexToDec(Input.substr(1, 1));
+    int memAddr = HexToDec(Input.substr(2, 2));
+    Mem.Set_Value(Regs.GetValues(regIdx), memAddr);
 }
 
+void Set_Instruction::Move(Registers& Regs) {
+    int regSrc = HexToDec(Input.substr(2, 1));
+    int regDest = HexToDec(Input.substr(3, 1));
+    Regs.SetValues(Regs.GetValues(regSrc), regDest);
+}
 
-
+bool Set_Instruction::Jump(Registers& Regs) {
+    int regIdx = HexToDec(Input.substr(1, 1));
+    return Regs.GetValues(regIdx) == Regs.GetValues(0);
+}

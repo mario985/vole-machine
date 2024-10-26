@@ -2,6 +2,7 @@
 #include "Set_Instruction.h"
 #include "Registers.h"
 #include "Memory.h"
+#include "ALU.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -9,8 +10,11 @@
 #include <sstream>
 #include <iomanip>
 using namespace std;
-int main(void){
+int main(void) {
     Program P;
     P.modify();
     P.print();
+
+
+
 }

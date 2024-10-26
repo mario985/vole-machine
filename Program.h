@@ -3,6 +3,7 @@
 #include "Registers.h"
 #include "Memory.h"
 #include "Set_Instruction.h"
+#include "ALU.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -11,12 +12,12 @@
 #include <iomanip>
 using namespace std;
 #endif
-class Program :Memory{
-
+class Program :public Memory, public ALU {
+private:
     Registers Reg;
     Memory Mem;
     Set_Instruction Inst;
-    string *ptr;
+    string* ptr;
 public:
     Program();
     void modify();
