@@ -19,11 +19,15 @@ double binaryFractionToDecimal(const string& binaryFraction) {
     }
     return decimalValue;
 }
-string decimalToBinary(int integerPart , bool ch) {
+string decimalToBinary(int integerPart, bool isNegative,bool ch) {
     if (!ch){
         return "0" ;
     }
     string binary = "";
+    if (isNegative) {
+        integerPart = (1 << 4) + integerPart;
+    }
+
     if (integerPart == 0) {
         return "0000";
     }
@@ -31,10 +35,10 @@ string decimalToBinary(int integerPart , bool ch) {
         binary = to_string(integerPart % 2) + binary;
         integerPart /= 2;
     }
-    while (binary.length() < 4 && ch !=0) {
+    while (binary.length() < 4) {
         binary = "0" + binary;
     }
-    if (binary.length() > 4) {
+    if (!isNegative && binary.length() > 8) {
         string binary8 = string(8 - binary.length(), '0') + binary;
         return binary8;
     }
@@ -44,7 +48,8 @@ string decimalToBinary(int integerPart , bool ch) {
 string fractionalToBinary(double fractionalPart) {
     string binary = ".";
     int count = 0;
-    while (fractionalPart > 0 && count < 4) {
+
+    while (fractionalPart > 0 && count < 8) {
         fractionalPart *= 2;
         if (fractionalPart >= 1) {
             binary += "1";
@@ -60,13 +65,21 @@ string fractionalToBinary(double fractionalPart) {
 
 string convertToBinary(double number) {
     string binary;
+
+    bool isNegative = number < 0;
+    if (isNegative) {
+        number = -number;
+    }
+    
+
     int integerPart = static_cast<int>(number);
     double fractionalPart = number - integerPart;
-    bool check = 0 ;
+bool check = 0 ;
     if (integerPart){
         check = 1 ;
     }
-    binary += decimalToBinary(integerPart , check);
+    binary += decimalToBinary(integerPart, isNegative , check);
+    
     if (fractionalPart > 0) {
         binary += fractionalToBinary(fractionalPart);
     }
@@ -76,17 +89,27 @@ string convertToBinary(double number) {
 int normalizeBinary(string& binary) {
     int exponent = 0;
     string normalized;
+    // Find the position of the first '1'
     size_t firstOne = binary.find('1');
-    
-    if (firstOne == 0) {
-        normalized = binary;
-        exponent = binary.length() - 1;
+    if (binary.find('.') != string::npos) {
+        // Case when there is a decimal point in the binary string
+        int decimalPos = binary.find('.');
+        if (firstOne < decimalPos) {
+            // Example: 0.1101 -> 1.101 * 2^-1
+            exponent = -(decimalPos - firstOne);
+        } else {
+            // Example: 1.101 -> already normalized
+            exponent = firstOne - decimalPos;
+        }
     } else {
-        normalized = binary.substr(firstOne, binary.length() - firstOne);
-        exponent = firstOne - 1; 
-        normalized.insert(1, ".");
+        // Case when it's a binary integer (e.g., 00111110)
+        exponent = binary.length() - firstOne - 1;
     }
-    if (binary[1] == '.'){
+
+    // Move the first `1` to the start, and insert a decimal point
+    normalized = binary.substr(firstOne, binary.length() - firstOne);
+    normalized.insert(1, ".");
+     if (binary[1] == '.'){
         exponent*=-1;
     }
     binary = normalized ;
@@ -106,27 +129,36 @@ void FloatAdd (string H1 , string H2){
     double man2 = binaryFractionToDecimal(mantesa2);
     double res1 = pow(-1,sgn1) * pow(2,exp1-3) * double(1+man1);
     double res2 = pow(-1,sgn2) * pow(2,exp2-3) * double(1+man2);
-    string bnr3 = convertToBinary(res1+res2) ;
+    double res3 = res1+res2 ;
+    string sgn3 = "0"; 
+    if ((res3 < 0)){
+        sgn3 = '1';
+        res3 = -1 * res3 ;
+    }
+    string bnr3 = convertToBinary(res3) ;
     int exp3 = normalizeBinary(bnr3) ;
+    if (exp3 + 3 > 7){
+        exp3 = 4 ;
+    }
     string mantes3 ;
     for (int i = 0 ; i < bnr3.length() ; i++ ){
         if (bnr3[i] == '.'){
-            mantes3 = bnr3.substr(i+1 ,bnr3.length() );
+            mantes3 = bnr3.substr(i+1 ,i+3 );
             break;
         }
     }
     while (mantes3.length() < 4){
         mantes3 = mantes3 +='0';
     }
-    string finalbnr = '0' + bitset<3>(exp3+3).to_string() + mantes3 ;
+    string finalbnr = sgn3 + bitset<3>(exp3+3).to_string() + mantes3 ;
     stringstream ss; 
-    ss << uppercase << hex << stoi(finalbnr, nullptr, 2); // Convert binary to integer, then to hex in uppercase
-    string hex = ss.str(); // Get the hex string
+    ss << uppercase << hex << stoi(finalbnr, nullptr, 2);
+    string hex = ss.str();
     cout << hex ;
 
     
 
 }
 int main (){
-    FloatAdd("5" , "15") ;
+    FloatAdd("F7" , "F7") ;
 }
