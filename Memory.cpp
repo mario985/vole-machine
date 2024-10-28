@@ -4,9 +4,7 @@
 #include <string>
 using namespace std;
 Memory::Memory():Mem_Slots(256){
-    for(int i=0;i<256;i++){
-        Mem_Slots[i]="00";
-    }
+    Reset();
 }
 void Memory::Set_Value(string value , int bit){
     Mem_Slots[bit]=value;
@@ -14,4 +12,7 @@ void Memory::Set_Value(string value , int bit){
 string Memory::Get_Value(int bit){
     return Mem_Slots[bit];
 
+}
+void Memory::Reset(){
+    fill(Mem_Slots.begin() , Mem_Slots.end() , "00");
 }

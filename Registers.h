@@ -12,6 +12,7 @@ public:
     Registers();
     void SetValues(string value,int bit);
     string GetValues(int bit);
+    void Reset();
 
 };
 #endif

@@ -6,6 +6,5 @@ class ALU{
     public:
     int HexToDec(const string & number);
     string DecToHex(const string & decimal);
-    bool Is_Valid(const string& number);
 };
 #endif

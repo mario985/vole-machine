@@ -5,11 +5,14 @@
 #include <string>
 using namespace std;
 Registers::Registers():Regs(17){
-    for(int i=0 ; i <17;i++)Regs[i]="00";
+    Reset();
 }
 void Registers::SetValues(string value,int bit){
     Regs[bit]=value;
 }
 string Registers::GetValues(int bit){
     return Regs[bit];
+}
+void Registers::Reset(){
+    fill(Regs.begin() , Regs.end() , "00");
 }

@@ -8,7 +8,7 @@
 #include <sstream>
 #include <iomanip>
 using namespace std;
-void Set_Instruction::ChooseMethod(const string& input, Registers& Reg, Memory& Mem, string*& ptr) {
+void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& Mem, string*& ptr) {
     Input = input;
     char opCode = Input[0];
     if (opCode == '1' || opCode == '2') {
@@ -27,7 +27,12 @@ void Set_Instruction::ChooseMethod(const string& input, Registers& Reg, Memory& 
     else if (opCode == '5') {
         twosCompAdd(Reg);
     }
-    ptr++;  // Increment pointer after each operation
+    else if(opCode=='C'){
+        return;
+    }
+    ptr++;
+    input.clear();
+
 }
 void Set_Instruction::Load(Registers& Regs, Memory& Mem) {
     char operation = Input[0];
@@ -38,6 +43,7 @@ void Set_Instruction::Load(Registers& Regs, Memory& Mem) {
         Regs.SetValues(Mem.Get_Value(memAddr), regIdx);
     }
     else {
+        cout<<"Load "<<regIdx<<"With "<<memAddr<<" Bits"<<endl;
         Regs.SetValues(Input.substr(2, 2), regIdx); // Load immediate value
     }
 }

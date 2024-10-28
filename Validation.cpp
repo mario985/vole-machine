@@ -8,15 +8,15 @@ bool is_valid_input (string input){
     //regex pattern (R"([-+]?[0-9]+[/]?[-+]?[0-9]*[1-9]*\s[-+*/]\s[-+]?[0-9][0-9]*[/]?[-+]?[0-9]*[1-9]*)") ;
     regex pattern(R"([1-6BC][0-9A-F]{1}[0-9A-F]{1}[0-9A-F]{1})");
     if(!(regex_match (input , pattern))){
-        return 0 ;
+        return false;
     }
     if (input[0] == 'C' && input.substr(1,3) != "000")
     {
-        return 0 ;
+        return false ;
     }
     if (input[0] == '4' && input[1] != '0')
     {
-        return 0;
+        return false;
     }
     return true ;
     

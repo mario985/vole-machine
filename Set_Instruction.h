@@ -11,7 +11,7 @@ class Set_Instruction :ALU{
     private:
     string Input;
     public:
-    void ChooseMethod(const string & input, Registers &Reg , Memory &Mem ,  string*&ptr);
+    void ChooseInstruction(string & input, Registers &Reg , Memory &Mem ,  string*&ptr);
     void Load(Registers &Regs , Memory &Mem);//1058 == R0 =M58    2058 == R0 = 58
     void Store(Registers &Regs , Memory &Mem);//3158  == M58 = R1
     void Move(Registers &Regs);//4056 == R6 = R5

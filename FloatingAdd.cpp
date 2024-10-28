@@ -93,7 +93,7 @@ int normalizeBinary(string& binary) {
     return exponent;
 }
 
-void FloatAdd (string H1 , string H2){
+string FloatAdd (string H1 , string H2){
     string bnr1 = bitset<8>(stoul(H1, nullptr, 16)).to_string();
     string bnr2 = bitset<8>(stoul(H2, nullptr, 16)).to_string();
     int sgn1 = stoi(bnr1.substr(0,1));
@@ -121,12 +121,32 @@ void FloatAdd (string H1 , string H2){
     string finalbnr = '0' + bitset<3>(exp3+3).to_string() + mantes3 ;
     stringstream ss; 
     ss << uppercase << hex << stoi(finalbnr, nullptr, 2); // Convert binary to integer, then to hex in uppercase
-    string hex = ss.str(); // Get the hex string
-    cout << hex ;
+    return ss.str();
 
     
 
 }
+string DecToHex(const string & decimal){
+    int decimalNumber;
+    std::stringstream ss;
+
+    // Convert the string to an integer
+    ss << decimal;
+    ss >> decimalNumber;
+    
+    // Clear the stringstream and set to hex mode
+    ss.clear();
+    ss.str("");
+    
+    // Set uppercase and hex mode
+    ss << std::uppercase << std::hex << decimalNumber;
+
+    // Return the hex string
+    return ss.str();
+}
 int main (){
-    FloatAdd("5" , "15") ;
+//    cout<<FloatAdd("D" , "F")<<endl;
+for(int i=1;i<256;i++){
+    cout<<FloatAdd("A5","01")<<endl;
+}
 }

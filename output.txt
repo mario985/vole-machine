@@ -1,274 +1,63 @@
-REgIndex[0]: 55
-REgIndex[1]: FF
-REgIndex[2]: FF
-REgIndex[3]: 00
-REgIndex[4]: 00
-REgIndex[5]: 00
-REgIndex[6]: 00
-REgIndex[7]: 00
-REgIndex[8]: 00
-REgIndex[9]: 00
-REgIndex[A]: 00
-REgIndex[B]: 00
-REgIndex[C]: 00
-REgIndex[D]: 00
-REgIndex[E]: 00
-REgIndex[F]: 00
-REgIndex[10]: 00
-==============
-MemSlot[0]: 20
-MemSlot[1]: 55
-MemSlot[2]: 21
-MemSlot[3]: FF
-MemSlot[4]: 31
-MemSlot[5]: A5
-MemSlot[6]: 12
-MemSlot[7]: A5
-MemSlot[8]: C0
-MemSlot[9]: 00
-MemSlot[A]: 00
-MemSlot[B]: 00
-MemSlot[C]: 00
-MemSlot[D]: 00
-MemSlot[E]: 00
-MemSlot[F]: 00
-MemSlot[10]: 00
-MemSlot[11]: 00
-MemSlot[12]: 00
-MemSlot[13]: 00
-MemSlot[14]: 00
-MemSlot[15]: 00
-MemSlot[16]: 00
-MemSlot[17]: 00
-MemSlot[18]: 00
-MemSlot[19]: 00
-MemSlot[1A]: 00
-MemSlot[1B]: 00
-MemSlot[1C]: 00
-MemSlot[1D]: 00
-MemSlot[1E]: 00
-MemSlot[1F]: 00
-MemSlot[20]: 00
-MemSlot[21]: 00
-MemSlot[22]: 00
-MemSlot[23]: 00
-MemSlot[24]: 00
-MemSlot[25]: 00
-MemSlot[26]: 00
-MemSlot[27]: 00
-MemSlot[28]: 00
-MemSlot[29]: 00
-MemSlot[2A]: 00
-MemSlot[2B]: 00
-MemSlot[2C]: 00
-MemSlot[2D]: 00
-MemSlot[2E]: 00
-MemSlot[2F]: 00
-MemSlot[30]: 00
-MemSlot[31]: 00
-MemSlot[32]: 00
-MemSlot[33]: 00
-MemSlot[34]: 00
-MemSlot[35]: 00
-MemSlot[36]: 00
-MemSlot[37]: 00
-MemSlot[38]: 00
-MemSlot[39]: 00
-MemSlot[3A]: 00
-MemSlot[3B]: 00
-MemSlot[3C]: 00
-MemSlot[3D]: 00
-MemSlot[3E]: 00
-MemSlot[3F]: 00
-MemSlot[40]: 00
-MemSlot[41]: 00
-MemSlot[42]: 00
-MemSlot[43]: 00
-MemSlot[44]: 00
-MemSlot[45]: 00
-MemSlot[46]: 00
-MemSlot[47]: 00
-MemSlot[48]: 00
-MemSlot[49]: 00
-MemSlot[4A]: 00
-MemSlot[4B]: 00
-MemSlot[4C]: 00
-MemSlot[4D]: 00
-MemSlot[4E]: 00
-MemSlot[4F]: 00
-MemSlot[50]: 00
-MemSlot[51]: 00
-MemSlot[52]: 00
-MemSlot[53]: 00
-MemSlot[54]: 00
-MemSlot[55]: 00
-MemSlot[56]: 00
-MemSlot[57]: 00
-MemSlot[58]: 00
-MemSlot[59]: 00
-MemSlot[5A]: 00
-MemSlot[5B]: 00
-MemSlot[5C]: 00
-MemSlot[5D]: 00
-MemSlot[5E]: 00
-MemSlot[5F]: 00
-MemSlot[60]: 00
-MemSlot[61]: 00
-MemSlot[62]: 00
-MemSlot[63]: 00
-MemSlot[64]: 00
-MemSlot[65]: 00
-MemSlot[66]: 00
-MemSlot[67]: 00
-MemSlot[68]: 00
-MemSlot[69]: 00
-MemSlot[6A]: 00
-MemSlot[6B]: 00
-MemSlot[6C]: 00
-MemSlot[6D]: 00
-MemSlot[6E]: 00
-MemSlot[6F]: 00
-MemSlot[70]: 00
-MemSlot[71]: 00
-MemSlot[72]: 00
-MemSlot[73]: 00
-MemSlot[74]: 00
-MemSlot[75]: 00
-MemSlot[76]: 00
-MemSlot[77]: 00
-MemSlot[78]: 00
-MemSlot[79]: 00
-MemSlot[7A]: 00
-MemSlot[7B]: 00
-MemSlot[7C]: 00
-MemSlot[7D]: 00
-MemSlot[7E]: 00
-MemSlot[7F]: 00
-MemSlot[80]: 00
-MemSlot[81]: 00
-MemSlot[82]: 00
-MemSlot[83]: 00
-MemSlot[84]: 00
-MemSlot[85]: 00
-MemSlot[86]: 00
-MemSlot[87]: 00
-MemSlot[88]: 00
-MemSlot[89]: 00
-MemSlot[8A]: 00
-MemSlot[8B]: 00
-MemSlot[8C]: 00
-MemSlot[8D]: 00
-MemSlot[8E]: 00
-MemSlot[8F]: 00
-MemSlot[90]: 00
-MemSlot[91]: 00
-MemSlot[92]: 00
-MemSlot[93]: 00
-MemSlot[94]: 00
-MemSlot[95]: 00
-MemSlot[96]: 00
-MemSlot[97]: 00
-MemSlot[98]: 00
-MemSlot[99]: 00
-MemSlot[9A]: 00
-MemSlot[9B]: 00
-MemSlot[9C]: 00
-MemSlot[9D]: 00
-MemSlot[9E]: 00
-MemSlot[9F]: 00
-MemSlot[A0]: 00
-MemSlot[A1]: 00
-MemSlot[A2]: 00
-MemSlot[A3]: 00
-MemSlot[A4]: 00
-MemSlot[A5]: FF
-MemSlot[A6]: 00
-MemSlot[A7]: 00
-MemSlot[A8]: 00
-MemSlot[A9]: 00
-MemSlot[AA]: 00
-MemSlot[AB]: 00
-MemSlot[AC]: 00
-MemSlot[AD]: 00
-MemSlot[AE]: 00
-MemSlot[AF]: 00
-MemSlot[B0]: 00
-MemSlot[B1]: 00
-MemSlot[B2]: 00
-MemSlot[B3]: 00
-MemSlot[B4]: 00
-MemSlot[B5]: 00
-MemSlot[B6]: 00
-MemSlot[B7]: 00
-MemSlot[B8]: 00
-MemSlot[B9]: 00
-MemSlot[BA]: 00
-MemSlot[BB]: 00
-MemSlot[BC]: 00
-MemSlot[BD]: 00
-MemSlot[BE]: 00
-MemSlot[BF]: 00
-MemSlot[C0]: 00
-MemSlot[C1]: 00
-MemSlot[C2]: 00
-MemSlot[C3]: 00
-MemSlot[C4]: 00
-MemSlot[C5]: 00
-MemSlot[C6]: 00
-MemSlot[C7]: 00
-MemSlot[C8]: 00
-MemSlot[C9]: 00
-MemSlot[CA]: 00
-MemSlot[CB]: 00
-MemSlot[CC]: 00
-MemSlot[CD]: 00
-MemSlot[CE]: 00
-MemSlot[CF]: 00
-MemSlot[D0]: 00
-MemSlot[D1]: 00
-MemSlot[D2]: 00
-MemSlot[D3]: 00
-MemSlot[D4]: 00
-MemSlot[D5]: 00
-MemSlot[D6]: 00
-MemSlot[D7]: 00
-MemSlot[D8]: 00
-MemSlot[D9]: 00
-MemSlot[DA]: 00
-MemSlot[DB]: 00
-MemSlot[DC]: 00
-MemSlot[DD]: 00
-MemSlot[DE]: 00
-MemSlot[DF]: 00
-MemSlot[E0]: 00
-MemSlot[E1]: 00
-MemSlot[E2]: 00
-MemSlot[E3]: 00
-MemSlot[E4]: 00
-MemSlot[E5]: 00
-MemSlot[E6]: 00
-MemSlot[E7]: 00
-MemSlot[E8]: 00
-MemSlot[E9]: 00
-MemSlot[EA]: 00
-MemSlot[EB]: 00
-MemSlot[EC]: 00
-MemSlot[ED]: 00
-MemSlot[EE]: 00
-MemSlot[EF]: 00
-MemSlot[F0]: 00
-MemSlot[F1]: 00
-MemSlot[F2]: 00
-MemSlot[F3]: 00
-MemSlot[F4]: 00
-MemSlot[F5]: 00
-MemSlot[F6]: 00
-MemSlot[F7]: 00
-MemSlot[F8]: 00
-MemSlot[F9]: 00
-MemSlot[FA]: 00
-MemSlot[FB]: 00
-MemSlot[FC]: 00
-MemSlot[FD]: 00
-MemSlot[FE]: 00
-MemSlot[FF]: 00
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit
+Choose method
+1-Import
+2-Print
+3-RunCode
+4-Step
+5-Clear
+6-ClearMemory
+7-ClearRegister
+8-Exit

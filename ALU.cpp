@@ -1,9 +1,14 @@
 #include "ALU.h"
+#include "Memory.h"
+#include "Registers.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <cctype>
 #include <string>
+#include <fstream>
+#include <istream>
+#include <regex>
 using namespace std;
 int ALU::HexToDec(const string&hex){
     return stoi(hex, nullptr , 16);
@@ -26,15 +31,4 @@ string ALU::DecToHex(const string & decimal){
 
     // Return the hex string
     return ss.str();
-}
-bool ALU::Is_Valid(const string& number) {
-    if (number.empty()) return false; // Add this line to avoid accessing number[0]
-    char firstChar = number[0];
-    // Check if the first character is a digit and within the valid range
-    if (isdigit(firstChar)) {
-        int intValue = firstChar - '0'; // Convert char to integer
-        return (intValue > 0 && intValue <= 5);
-    }
-    // Check if the first character is 'B' or 'C'
-    return (toupper(firstChar) == 'B' || toupper(firstChar) == 'C');
 }
