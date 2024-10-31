@@ -5,6 +5,12 @@
 using namespace std;
 Memory::Memory():Mem_Slots(256){
     Reset();
+    Mem_Slots[0] = "20";
+    Mem_Slots[1] = "11";
+    Mem_Slots[2] = "21";
+    Mem_Slots[3] = "20";
+    Mem_Slots[4] = "C0";
+    Mem_Slots[5] = "00";
 }
 void Memory::Set_Value(string value , int bit){
     Mem_Slots[bit]=value;
