@@ -80,7 +80,7 @@ void CPU::RunCode(){
 bool CPU::Is_Valid_Input(const string&input){
     bool check = 0 ;
     //regex pattern (R"([-+]?[0-9]+[/]?[-+]?[0-9]*[1-9]*\s[-+*/]\s[-+]?[0-9][0-9]*[/]?[-+]?[0-9]*[1-9]*)") ;
-    regex pattern(R"([1-6BC][0-9A-F]{1}[0-9A-F]{1}[0-9A-F]{1})");
+    regex pattern(R"([1-9ABCD][0-9A-F]{1}[0-9A-F]{1}[0-9A-F]{1})");
     if(!(regex_match (input , pattern))){
         return false;
     }
@@ -111,6 +111,7 @@ void CPU::Clear(){
     Input.clear();
 }
 void CPU::print(){
+    cout<<*Program_counter<<endl;
     for (int i = 0; i < 16; i++) {
         cout << "RegIndex[" << DecToHex(to_string(i)) << "]: " << Reg.GetValues(i) << endl;
     }
