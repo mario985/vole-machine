@@ -37,8 +37,12 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
     else if (opCode == '9') {
         BitXOR(Reg);
     }
+    else if(opCode == 'A'){
+        rotateRight(Reg);
+    }
     else if (opCode == 'B' && Jump(Reg)) {
         ptr = HexToDec(Input.substr(2, 2));
+        input.clear();
         return;
     }
     else if(opCode=='C'){
@@ -46,6 +50,7 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
     }
     else if (opCode == 'D' && Jump2(Reg)) {
         ptr = HexToDec(Input.substr(2, 2));
+        input.clear();
         return;
     }
     ptr++;
@@ -80,6 +85,15 @@ void Set_Instruction::Move(Registers& Regs) {
 bool Set_Instruction::Jump(Registers& Regs) {
     int regIdx = HexToDec(Input.substr(1, 1));
     return Regs.GetValues(regIdx) == Regs.GetValues(0);
+}
+bool Set_Instruction::Compare(Registers &R) {
+    int regIdxS = HexToDec(Input.substr(1, 1)); // index of reg1 to add
+    int regIdxT = 0;// index of reg2 to add
+    string value1 = R.GetValues(regIdxS); // Hexa form of the value in the register
+    string value2 = R.GetValues(regIdxT);
+    int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
+    int num2 = stoi(value2, nullptr, 16) - 256;
+    return num1>num2;
 }
 bool Set_Instruction::Jump2(Registers& Regs) {
     int regIdx = HexToDec(Input.substr(1, 1));
@@ -216,13 +230,4 @@ void Set_Instruction::rotateRight(Registers & Regs) {
 
 
 
-}
-bool Set_Instruction::Compare(Registers &R) {
-    int regIdxS = HexToDec(Input.substr(1, 1)); // index of reg1 to add
-    int regIdxT = 0;// index of reg2 to add
-    string value1 = R.GetValues(regIdxS); // Hexa form of the value in the register
-    string value2 = R.GetValues(regIdxT);
-    int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
-    int num2 = stoi(value2, nullptr, 16) - 256;
-    return num1>num2;
 }
