@@ -21,7 +21,7 @@ class Set_Instruction :ALU{
      void BitOR (Registers &Regs );
      void BitAND (Registers &Regs );
      void BitXOR (Registers &Regs );
-     string FloatAdd(Registers &Regs);
+     void FloatAdd(Registers &Regs);
 
 };
 #endif

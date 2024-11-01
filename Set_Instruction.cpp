@@ -157,7 +157,7 @@ void Set_Instruction::BitXOR(Registers& Regs) {
     }
     Regs.SetValues(res, regIdxR);
 }
-string Set_Instruction::FloatAdd(Registers &Regs) {
+void Set_Instruction::FloatAdd(Registers &Regs) {
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
     string H1 = Input.substr(2, 1); // index of reg1 to add
     string H2 = Input.substr(3, 1); // index of reg2 to add
