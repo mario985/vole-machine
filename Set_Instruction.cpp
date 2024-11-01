@@ -1,6 +1,7 @@
 #include "Set_Instruction.h"
 #include "Registers.h"
 #include "Memory.h"
+#include "ALU.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -16,16 +17,16 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
     }
     else if (opCode == '3') {
         Store(Reg, Mem);
+     
     }
     else if (opCode == '4') {
         Move(Reg);
     }
-    else if (opCode == 'B' && Jump(Reg)) {
-        ptr = HexToDec(Input.substr(2, 2));
-        return;
-    }
     else if (opCode == '5') {
         twosCompAdd(Reg);
+    }
+    else if (opCode == '6') {
+        FloatAdd(Reg);
     }
     else if (opCode == '7') {
         BitOR(Reg);
@@ -36,12 +37,19 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
     else if (opCode == '9') {
         BitXOR(Reg);
     }
+    else if (opCode == 'B' && Jump(Reg)) {
+        ptr = HexToDec(Input.substr(2, 2));
+        return;
+    }
     else if(opCode=='C'){
+        return;
+    }
+    else if (opCode == 'D' && Jump2(Reg)) {
+        ptr = HexToDec(Input.substr(2, 2));
         return;
     }
     ptr++;
     input.clear();
-
 }
 void Set_Instruction::Load(Registers& Regs, Memory& Mem) {
     char operation = Input[0];
@@ -73,8 +81,11 @@ bool Set_Instruction::Jump(Registers& Regs) {
     int regIdx = HexToDec(Input.substr(1, 1));
     return Regs.GetValues(regIdx) == Regs.GetValues(0);
 }
+bool Set_Instruction::Jump2(Registers& Regs) {
+    int regIdx = HexToDec(Input.substr(1, 1));
+    return Regs.GetValues(regIdx) > Regs.GetValues(0);
+}
 void Set_Instruction::twosCompAdd(Registers &R) {
-
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
     int regIdxS = HexToDec(Input.substr(2, 1)); // index of reg1 to add
     int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
@@ -118,11 +129,6 @@ void Set_Instruction::BitAND(Registers& Regs) {
     int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
     string value1 = "0x";
     string value2 = "0x";
-    /*
-    2001
-    2121
-    7201
-    */
     value1 += Regs.GetValues(regIdxS); // Hexa form of the value in the register
     value2 += Regs.GetValues(regIdxT);
     int num1 = stoi(value1, nullptr, 16);
@@ -140,11 +146,6 @@ void Set_Instruction::BitXOR(Registers& Regs) {
     int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
     string value1 = "0x";
     string value2 = "0x";
-    /*
-    2001
-    2121
-    7201
-    */
     value1 += Regs.GetValues(regIdxS); // Hexa form of the value in the register
     value2 += Regs.GetValues(regIdxT);
     int num1 = stoi(value1, nullptr, 16);
@@ -156,126 +157,10 @@ void Set_Instruction::BitXOR(Registers& Regs) {
     }
     Regs.SetValues(res, regIdxR);
 }
-double binaryFractionToDecimal(const string& binaryFraction) {
-    double decimalValue = 0.0;
-    size_t pointPosition = binaryFraction.find('.');
-    if (pointPosition == string::npos) {
-        return 0.0;
-    }
-    for (size_t i = pointPosition + 1; i < binaryFraction.size(); ++i) {
-        if (binaryFraction[i] == '1') {
-            decimalValue += 1.0 / pow(2, i - pointPosition);
-        }
-    }
-    return decimalValue;
-}
-string decimalToBinary(int integerPart, bool isNegative, bool ch) {
-    if (!ch) {
-        return "0";
-    }
-    string binary = "";
-    if (isNegative) {
-        integerPart = (1 << 4) + integerPart;
-    }
-
-    if (integerPart == 0) {
-        return "0000";
-    }
-    while (integerPart > 0) {
-        binary = to_string(integerPart % 2) + binary;
-        integerPart /= 2;
-    }
-    while (binary.length() < 4) {
-        binary = "0" + binary;
-    }
-    if (!isNegative && binary.length() > 8) {
-        string binary8 = string(8 - binary.length(), '0') + binary;
-        return binary8;
-    }
-    return binary;
-}
-
-string fractionalToBinary(double fractionalPart) {
-    string binary = ".";
-    int count = 0;
-
-    while (fractionalPart > 0 && count < 8) {
-        fractionalPart *= 2;
-        if (fractionalPart >= 1) {
-            binary += "1";
-            fractionalPart -= 1;
-        }
-        else {
-            binary += "0";
-        }
-        count++;
-    }
-
-    return binary;
-}
-
-string convertToBinary(double number) {
-    string binary;
-
-    bool isNegative = number < 0;
-    if (isNegative) {
-        number = -number;
-    }
-
-
-    int integerPart = static_cast<int>(number);
-    double fractionalPart = number - integerPart;
-    bool check = 0;
-    if (integerPart) {
-        check = 1;
-    }
-    binary += decimalToBinary(integerPart, isNegative, check);
-
-    if (fractionalPart > 0) {
-        binary += fractionalToBinary(fractionalPart);
-    }
-
-    return binary;
-}
-int normalizeBinary(string& binary) {
-    size_t exponent = 0;
-    string normalized;
-    // Find the position of the first '1'
-    size_t firstOne = binary.find('1');
-    if (binary.length() == 1 && binary[0] == '0') {
-        firstOne = 0;
-    }
-    if (binary.find('.') != string::npos) {
-        // Case when there is a decimal point in the binary string
-        size_t decimalPos = binary.find('.');
-        if (firstOne < decimalPos) {
-            // Example: 0.1101 -> 1.101 * 2^-1
-            exponent = (decimalPos - firstOne);
-        }
-        else {
-            // Example: 1.101 -> already normalized
-            exponent = firstOne - decimalPos;
-        }
-    }
-    else {
-        // Case when it's a binary integer (e.g., 00111110)
-        exponent = binary.length() - firstOne - 1;
-    }
-    // Move the first `1` to the start, and insert a decimal point
-    normalized = binary.substr(firstOne, binary.length() - firstOne);
-    normalized.insert(1, ".");
-    if (binary[1] == '.') {
-        exponent *= -1;
-    }
-    binary = normalized;
-    return (int)exponent;
-}
-string decimalToHex(int decimal) {
-    stringstream ss;
-    ss << hex << uppercase << decimal;
-    return ss.str();
-}
-void FloatAdd(string H1, string H2) {
+string Set_Instruction::FloatAdd(Registers &Regs) {
+    int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
+    string H1 = Input.substr(2, 1); // index of reg1 to add
+    string H2 = Input.substr(3, 1); // index of reg2 to add
     string bnr1 = bitset<8>(stoul(H1, nullptr, 16)).to_string();
     string bnr2 = bitset<8>(stoul(H2, nullptr, 16)).to_string();
     int sgn1 = stoi(bnr1.substr(0, 1));
@@ -314,5 +199,5 @@ void FloatAdd(string H1, string H2) {
     stringstream ss;
     ss << uppercase << hex << stoi(finalbnr, nullptr, 2);
     string hex = ss.str();
-
+    Regs.SetValues(hex , regIdxR);
 }
