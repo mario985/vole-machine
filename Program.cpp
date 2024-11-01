@@ -35,15 +35,15 @@ void Program::MainMenu(){
          }
          else cout<<"Please enter a valid choice"<<endl;
     }
-    if(!ChooseMethod(Choice)){
-        cout<<"Dont forget to try our GUI version (:"<<endl;
-        cout << "\nEEEEE  X   X  III  TTTTT   TTTTT  III  N   N   GGG  "<<endl;
-        cout << "E      X   X   I     T       T     I   NN  N  G     "<<endl;
-        cout << "EEE     X X    I     T       T     I   N N N  G  GG "<<endl;
-        cout << "E        X     I     T       T     I   N  NN  G   G "<<endl;
-        cout << "EEEEE   X  X  III    T       T    III  N   N   GGG  "<<endl;
-        return;
-    };
+    // if(!ChooseMethod(Choice)){
+    //     cout<<"Dont forget to try our GUI version (:"<<endl;
+    //     cout << "\nEEEEE  X   X  III  TTTTT   TTTTT  III  N   N   GGG  "<<endl;
+    //     cout << "E      X   X   I     T       T     I   NN  N  G     "<<endl;
+    //     cout << "EEE     X X    I     T       T     I   N N N  G  GG "<<endl;
+    //     cout << "E        X     I     T       T     I   N  NN  G   G "<<endl;
+    //     cout << "EEEEE   X  X  III    T       T    III  N   N   GGG  "<<endl;
+    //     return;
+    // };
 
     }
 

@@ -22,6 +22,9 @@ class Set_Instruction :ALU{
      void BitAND (Registers &Regs );
      void BitXOR (Registers &Regs );
      void FloatAdd(Registers &Regs);
+     void FloatAdd(Registers &Regs);
+     bool Compare(Registers &R);
+     void rotateRight(Registers & Regs);
 
 };
 #endif
