@@ -9,22 +9,22 @@
 #include <iomanip>
 #include <cmath>
 using namespace std;
-int ALU::HexToDec(const string&hex){
-    return stoi(hex, nullptr , 16);
+int ALU::HexToDec(const string& hex) {
+    return stoi(hex, nullptr, 16);
 
 }
-string ALU::DecToHex(const string & decimal){
+string ALU::DecToHex(const string& decimal) {
     int decimalNumber;
     std::stringstream ss;
 
     // Convert the string to an integer
     ss << decimal;
     ss >> decimalNumber;
-    
+
     // Clear the stringstream and set to hex mode
     ss.clear();
     ss.str("");
-    
+
     // Set uppercase and hex mode
     ss << std::uppercase << std::hex << decimalNumber;
 
@@ -122,7 +122,7 @@ int ALU::normalizeBinary(string& binary) {
         size_t decimalPos = binary.find('.');
         if (firstOne < decimalPos) {
             // Example: 0.1101 -> 1.101 * 2^-1
-            exponent = (decimalPos - firstOne);
+            exponent = -1 * (decimalPos - firstOne);
         }
         else {
             // Example: 1.101 -> already normalized
