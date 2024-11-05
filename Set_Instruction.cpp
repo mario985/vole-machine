@@ -7,23 +7,22 @@
 #include <bitset>
 #include <sstream>
 #include <iomanip>
-#include <stdint.h>
 using namespace std;
-void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& Mem, string*& ptr) {
+void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& Mem, int &ptr) {
     Input = input;
     char opCode = Input[0];
-        if (opCode == '1' || opCode == '2') {
+    if (opCode == '1' || opCode == '2') {
         Load(Reg, Mem);
     }
     else if (opCode == '3') {
-        Store(Reg, Mem);
-     
+        if (Input[2] == '0' && Input[3] == '0') { 
+            Store(Reg, Mem);
+            output(Reg); 
+        }
+        else Store(Reg, Mem);
     }
     else if (opCode == '4') {
         Move(Reg);
-    }
-    else if (opCode == '5') {
-        twosCompAdd(Reg);
     }
     else if (opCode == '5') {
         twosCompAdd(Reg);
@@ -40,23 +39,22 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
     else if (opCode == '9') {
         BitXOR(Reg);
     }
-    else if(opCode == 'A'){
+    else if (opCode == 'A') {
         rotateRight(Reg);
     }
     else if (opCode == 'B' && Jump(Reg)) {
-        ptr = &Mem.Mem_Slots[HexToDec(Input.substr(2, 2))];
-         input.clear();
+        ptr = HexToDec(Input.substr(2, 2)) - 2;
+        input.clear();
+        return;
+    }
+    else if (opCode == 'C') {
         return;
     }
     else if (opCode == 'D' && Jump2(Reg)) {
-        ptr = &Mem.Mem_Slots[HexToDec(Input.substr(2, 2))];
-         input.clear();
+        ptr = HexToDec(Input.substr(2, 2));
+        input.clear();
         return;
     }
-    else if(opCode=='C'){
-        return;
-    }
-    ptr++;
     input.clear();
 
 }
@@ -90,10 +88,6 @@ bool Set_Instruction::Jump(Registers& Regs) {
     int regIdx = HexToDec(Input.substr(1, 1));
     return Regs.GetValues(regIdx) == Regs.GetValues(0);
 }
-bool Set_Instruction::Jump2(Registers& Regs) {
-    int regIdx = HexToDec(Input.substr(1, 1));
-    return Compare(Regs);
-}
 void Set_Instruction::twosCompAdd(Registers &R) {
 
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
@@ -105,20 +99,10 @@ void Set_Instruction::twosCompAdd(Registers &R) {
     value2 += R.GetValues(regIdxT);
     int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
     int num2 = stoi(value2, nullptr, 16) - 256;
-    
     int res = num1 + num2;
     string result = DecToHex(to_string(res));
     result = result.substr(6,2);
     R.SetValues(result, regIdxR);
-}
-bool Set_Instruction::Compare(Registers &R) {
-    int regIdxS = HexToDec(Input.substr(1, 1)); // index of reg1 to add
-    int regIdxT = 0;// index of reg2 to add
-    string value1 = R.GetValues(regIdxS); // Hexa form of the value in the register
-    string value2 = R.GetValues(regIdxT);
-    int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
-    int num2 = stoi(value2, nullptr, 16) - 256;
-    return num1>num2;
 }
 void Set_Instruction::BitOR(Registers& Regs) {
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
@@ -137,6 +121,9 @@ void Set_Instruction::BitOR(Registers& Regs) {
     int num2 = stoi(value2, nullptr, 16);
     int result = (num1 | num2);
     string res = DecToHex(to_string(result));
+    if (res.length() == 1) {
+        res.insert(0, "0");
+    }
     Regs.SetValues(res, regIdxR);
 
 }
@@ -146,6 +133,11 @@ void Set_Instruction::BitAND(Registers& Regs) {
     int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
     string value1 = "0x";
     string value2 = "0x";
+    /*
+    2001
+    2121
+    7201
+    */
     value1 += Regs.GetValues(regIdxS); // Hexa form of the value in the register
     value2 += Regs.GetValues(regIdxT);
     int num1 = stoi(value1, nullptr, 16);
@@ -160,9 +152,14 @@ void Set_Instruction::BitAND(Registers& Regs) {
 void Set_Instruction::BitXOR(Registers& Regs) {
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
     int regIdxS = HexToDec(Input.substr(2, 1)); // index of reg1 to add
-    int regIdxT =  HexToDec(Input.substr(3, 1));
+    int regIdxT = HexToDec(Input.substr(3, 1)); // index of reg2 to add
     string value1 = "0x";
     string value2 = "0x";
+    /*
+    2001
+    2121
+    7201
+    */
     value1 += Regs.GetValues(regIdxS); // Hexa form of the value in the register
     value2 += Regs.GetValues(regIdxT);
     int num1 = stoi(value1, nullptr, 16);
@@ -174,9 +171,30 @@ void Set_Instruction::BitXOR(Registers& Regs) {
     }
     Regs.SetValues(res, regIdxR);
 }
-void Set_Instruction::FloatAdd(Registers &Regs) {
+void Set_Instruction::output(Registers& R){
+    int regIdxR = HexToDec(Input.substr(1, 1));
+    string hexstr = "0x";
+    hexstr += R.GetValues(regIdxR);
+    int AsciiVal = stoi(hexstr, nullptr, 16);
+    outputstr += char(AsciiVal);
+}
+
+bool Set_Instruction::Compare(Registers& R) {
+    int regIdxS = HexToDec(Input.substr(1, 1)); // index of reg1 to add
+    int regIdxT = 0;// index of reg2 to add
+    string value1 = R.GetValues(regIdxS); // Hexa form of the value in the register
+    string value2 = R.GetValues(regIdxT);
+    int num1 = stoi(value1, nullptr, 16) - 256; // adjust the 2 numbers in 2's Comp by subtracting 256
+    int num2 = stoi(value2, nullptr, 16) - 256;
+    return num1 > num2;
+}
+bool Set_Instruction::Jump2(Registers& Regs) {
+    int regIdx = HexToDec(Input.substr(1, 1));
+    return Compare(Regs);
+}
+void Set_Instruction::FloatAdd(Registers& Regs) {
     int regIdxR = HexToDec(Input.substr(1, 1)); // index of reg to store bits at
-    string H1 = Regs.GetValues(HexToDec(Input.substr(2,1))); // index of reg1 to add
+    string H1 = Regs.GetValues(HexToDec(Input.substr(2, 1))); // index of reg1 to add
     string H2 = Regs.GetValues(HexToDec(Input.substr(3, 1))); // index of reg2 to add
     string bnr1 = bitset<8>(stoul(H1, nullptr, 16)).to_string();
     string bnr2 = bitset<8>(stoul(H2, nullptr, 16)).to_string();
@@ -216,20 +234,20 @@ void Set_Instruction::FloatAdd(Registers &Regs) {
     stringstream ss;
     ss << uppercase << hex << stoi(finalbnr, nullptr, 2);
     string hex = ss.str();
-    Regs.SetValues(hex , regIdxR);
+    Regs.SetValues(hex, regIdxR);
 }
-void Set_Instruction::rotateRight(Registers & Regs) {
+void Set_Instruction::rotateRight(Registers& Regs) {
     const int bits = 8;
-    int steps = HexToDec(Input.substr(2,2));
-    uint8_t value= HexToDec(Regs.GetValues(stoi(Input.substr(1,1))));
-    steps = steps % bits; 
-    uint8_t result1= (value >> steps) | (value << (bits - steps));
-//    int result= static_cast<int>(result1);
+    int steps = HexToDec(Input.substr(2, 2));
+    uint8_t value = HexToDec(Regs.GetValues(stoi(Input.substr(1, 1))));
+    steps = steps % bits;
+    uint8_t result1 = (value >> steps) | (value << (bits - steps));
+    //    int result= static_cast<int>(result1);
     string result = (DecToHex(to_string(result1)));
     if (result.length() == 1) {
-            result.insert(0, "0");
-        }
-   Regs.SetValues( result, HexToDec(Input.substr(1,1)));
+        result.insert(0, "0");
+    }
+    Regs.SetValues(result, HexToDec(Input.substr(1, 1)));
 
 
 
