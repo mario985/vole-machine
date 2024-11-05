@@ -1,3 +1,4 @@
+
 #include "Machine.h"
 
 void Machine::Import(string filename) {
@@ -23,5 +24,4 @@ void Machine::Import(string filename) {
     }
 }
 void Machine::setOutput() {
-    
 }

@@ -4,12 +4,15 @@
 #include "InstInput.h"
 #include <string>
 #include <cctype>
+#include <wx/icon.h>
 
 wxBEGIN_EVENT_TABLE(MainFrame, wxFrame)
 	EVT_TIMER(wxID_ANY, MainFrame::updatevalues)  // Bind the timer event
 wxEND_EVENT_TABLE()
-
 MainFrame::MainFrame(const wxString& title) : wxFrame(nullptr, wxID_ANY, title,wxDefaultPosition,wxDefaultSize,wxDEFAULT_FRAME_STYLE & ~(wxRESIZE_BORDER | wxMAXIMIZE_BOX)),timer(this) {
+	        wxIcon icon(".\\app_icon.ico", wxBITMAP_TYPE_ICO);
+        SetIcon(icon);
+
 	wxPanel* panel = new wxPanel(this);
 	// Buttons
 	wxButton* Run = new wxButton(panel, wxID_ANY, "Run", wxPoint(590, 505), wxSize(100, 35)); // Button config
@@ -108,6 +111,7 @@ void MainFrame::ClearMButtonClicked(wxCommandEvent& evt){
 
 	if (response == wxID_YES) {
 		Program.getCpu().getMem().Reset();
+		iR->SetValue("");
 		wxLogStatus("Memory Cleared!"); 
 	}
 	
@@ -178,5 +182,6 @@ void MainFrame::updatevalues(wxTimerEvent& evt) {
 
 void MainFrame::OnResetButtonCliked(wxCommandEvent& evt){
 	Program.getCpu().getPc() = 0;
+	iR->SetValue("");
 	PcCount->SetValue(wxDecToHex(Program.getCpu().getPc()));
 }

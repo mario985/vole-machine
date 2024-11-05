@@ -7,6 +7,8 @@
 #include <bitset>
 #include <sstream>
 #include <iomanip>
+#include <stdint.h>
+#include <cmath>
 using namespace std;
 void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& Mem, int &ptr) {
     Input = input;
@@ -43,7 +45,7 @@ void Set_Instruction::ChooseInstruction(string& input, Registers& Reg, Memory& M
         rotateRight(Reg);
     }
     else if (opCode == 'B' && Jump(Reg)) {
-        ptr = HexToDec(Input.substr(2, 2)) - 2;
+        ptr = HexToDec(Input.substr(2, 2))-2;
         input.clear();
         return;
     }

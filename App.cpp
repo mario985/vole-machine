@@ -1,6 +1,7 @@
+
 #include "App.h"
 #include "MainFrame.h"
-#include <wx/wx.h>
+#include <wx/wx.h> 
 
 wxIMPLEMENT_APP(App);
 bool App::OnInit() {
@@ -9,5 +10,6 @@ bool App::OnInit() {
 	mainFrame->SetClientSize(700, 550);
 	mainFrame->Center();
 	mainFrame->Show();
+	
 	return true;
-}
+	}

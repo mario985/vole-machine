@@ -1,3 +1,4 @@
+
 #include "InstInput.h"
 
 
@@ -18,5 +19,3 @@ InstInput::InstInput(wxWindow* parent, const wxString& title)
         EndModal(wxID_CANCEL);
     });
 }
-
-

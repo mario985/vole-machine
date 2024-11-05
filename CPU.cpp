@@ -12,22 +12,24 @@
 #include <fstream>
 #define slot Mem.Mem_Slots
 using namespace std;
-
+static int BitCounter = 0 ;
 CPU::CPU() { 
     Program_counter = 0;
 }
 
 void CPU::Import(string filename,int Address = 0) {
-   
+
+    if(Address<BitCounter-1){
+       Program_counter = Address ; 
+    }
     Inst.getOutput().clear();
     ifstream file;
     string word;
     file.open(filename, ios::in);
-    int BitCounter = Address;
+    BitCounter = Address;
     bool End = false;
     while (file >> word) {
         for (char &c : word) {
-
            if (isalpha(c)) {
                c = toupper(c);
            }
@@ -37,7 +39,6 @@ void CPU::Import(string filename,int Address = 0) {
             Mem.Set_Value(word.substr(2, 2), BitCounter++);
         }
         if (word == "C000" || BitCounter >= 255) {
-            
             return;
         }
     }
@@ -49,8 +50,9 @@ void CPU::Import(string filename,int Address = 0) {
 }
 
 void CPU::Step(){
+    
     if(IR=="C000" || Program_counter + 1 > 255){
-        Program_counter = 0;
+        IR.clear();
         return;
     }
     IR += slot[Program_counter];
@@ -68,21 +70,9 @@ void CPU::RunCode(){
     IR.clear();
     while(true){
         if(IR=="C000" || Program_counter + 1 > 255){
-            
-            Program_counter = 0;
+            Program_counter = 0 ;
             return;
         }
-        //if (Program_counter + 2 > 255) {
-        //    IR += slot[254];
-        //    IR += slot[255];
-        //    IR2 = IR;
-        //    if (Is_Valid_Input(IR)) {
-        //        Inst.ChooseInstruction(IR, Reg, Mem, Program_counter);
-        //        //Program_counter += 2;
-        //        //IR.clear();
-        //    }
-        //    return;
-        //}
         Step();
     }
 }

@@ -35,4 +35,3 @@ public:
 	MainFrame(const wxString& title);
     
 };
-
