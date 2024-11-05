@@ -12,7 +12,7 @@
 #include <algorithm>
 using namespace std;
 Program::Program() : Choices{'1', '2', '3', '4', '5', '6', '7', '8'} {
-    MainMenu();
+    //MainMenu();
 }
 void Program::MainMenu(){
     while(true){

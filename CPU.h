@@ -11,28 +11,52 @@
 #include <iomanip>
 #include <regex>
 #include <fstream>
+
 using namespace std;
-class CPU:public ALU{
-    private:
+class CPU {
+
+protected:
     Memory Mem;
     Registers Reg;
     vector<string>file_content;
-    string *Program_counter;
-    string Input;
+    int Program_counter;
+    string IR;
+    string IR2;
     Set_Instruction Inst;
-    public:
+    ALU AL;
+
+public:
     CPU();
-    bool ChooseMethod(const char & Choice);
-    void Import(string filename);
-    void RunCode();
-    void Step();
-    void ClearMemory();
-    void ClearRegister();
-    void Clear();
-    void print();
-    bool Is_Valid_Input(const string&name);
-    bool File_Check(const string&name);
+        void RunCode();
+        void Step();
+        void Import(string filename,int Address);
+        bool Is_Valid_Input(const string&name);
+        bool File_Check(const string&name);
+        Memory& getMem() {
+            return Mem;
+        }
+        string& getIR() {
+            return IR;
+        }
+        string& getIR2() {
+            return IR2;
+        }
+        ALU& getALU() {
 
+            return AL;
+        }
+        Registers& getReg() {
 
+            return Reg;
+        }
+        int& getPc() {
+            return Program_counter;
+        }
+        void setPc(int value) {
+            Program_counter = value;
+        }
+        string& getO() {
+            return Inst.getOutput();
+        }
 };
 #endif

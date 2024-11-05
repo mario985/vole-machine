@@ -4,8 +4,9 @@
 #include <bitset>
 #include <string>
 using namespace std;
-Registers::Registers():Regs(17){
+Registers::Registers():Regs(16){
     Reset();
+    
 }
 void Registers::SetValues(string value,int bit){
     Regs[bit]=value;
