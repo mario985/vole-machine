@@ -141,4 +141,8 @@ int ALU::normalizeBinary(string& binary) {
     }
     binary = normalized;
     return (int)exponent;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ccb3b64d80a319ab1d95b8035a67d9771c43620a
