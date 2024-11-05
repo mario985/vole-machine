@@ -5,6 +5,7 @@
 using namespace std;
 Memory::Memory():Mem_Slots(256){
     Reset();
+    
 }
 void Memory::Set_Value(string value , int bit){
     Mem_Slots[bit]=value;
